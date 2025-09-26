@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory Information System Logic Model</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            color: #2c3e50;
+            overflow-x: auto;
+            min-height: 100vh;
+        }
+        
+        .download-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .container {
+            width: 1900px;
+            min-height: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 30px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .team-names {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 12px 30px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .vision {
+            background: linear-gradient(135deg, #ecf0f1 0%, #d5dbdb 100%);
+            padding: 20px 30px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .vision h2 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .vision p {
+            color: #34495e;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logic-flow {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            min-height: 500px;
+            border-bottom: 4px solid #34495e;
+            gap: 2px;
+        }
+        
+        .flow-section {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: white;
+        }
+        
+        .flow-header {
+            padding: 15px;
+            text-align: center;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+        
+        /* Different colors for each section */
+        .flow-section:nth-child(1) .flow-header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .flow-section:nth-child(2) .flow-header {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+        
+        .flow-section:nth-child(3) .flow-header {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+        
+        .flow-section:nth-child(4) .flow-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+        
+        .flow-section:nth-child(5) .flow-header {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+        
+        .flow-section:nth-child(6) .flow-header {
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        }
+        
+        .flow-header h3 {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .flow-header .subtitle {
+            font-size: 11px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .flow-content {
+            flex: 1;
+            padding: 20px;
+            min-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .flow-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #495057;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .flow-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .flow-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .flow-item ul {
+            margin: 0;
+            padding-left: 15px;
+            list-style-type: none;
+        }
+        
+        .flow-item li {
+            margin-bottom: 5px;
+            line-height: 1.4;
+            position: relative;
+        }
+        
+        .flow-item li:before {
+            content: "▶";
+            color: #3498db;
+            margin-right: 8px;
+            font-size: 8px;
+        }
+        
+        .flow-item li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .outcomes-impact-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
+        }
+        
+        .outcome-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #495057;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .outcome-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .outcome-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .citation {
+            font-size: 10px;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .impact-assumptions-row {
+            min-height: 250px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+        
+        .impact-section {
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        
+        .assumptions-section {
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-header h3 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .section-content {
+            flex: 1;
+            padding: 20px;
+            min-height: 190px;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            height: 100%;
+        }
+        
+        .impact-item {
+            background: linear-gradient(135deg, #f39c12 10%, #f1c40f 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .impact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+        
+        .impact-item:nth-child(2) {
+            background: linear-gradient(135deg, #e74c3c 10%, #c0392b 100%);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .impact-item:nth-child(2):hover {
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .impact-item:nth-child(3) {
+            background: linear-gradient(135deg, #27ae60 10%, #229954 100%);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .impact-item:nth-child(3):hover {
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .impact-item:nth-child(4) {
+            background: linear-gradient(135deg, #9b59b6 10%, #8e44ad 100%);
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+        }
+        
+        .impact-item:nth-child(4):hover {
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+        }
+        
+        .impact-item strong {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .assumptions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            height: 100%;
+        }
+        
+        .assumption-item {
+            background: linear-gradient(135deg, #ecf0f1 0%, #d5dbdb 100%);
+            padding: 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .assumption-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border-color: #3498db;
+        }
+        
+        .assumption-item h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .assumption-item p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: #495057;
+            flex: 1;
+        }
+        
+        /* Flow arrows */
+        .flow-section:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #3498db;
+            font-weight: bold;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .download-btn {
+                display: none;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        @media (max-width: 2000px) {
+            body {
+                overflow-x: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn" onclick="downloadImage()">📄 Download PNG</button>
+    
+    <div class="container" id="logic-model-container">
+        <div class="header">
+            <h1>Laboratory Information System Implementation Logic Model</h1>
+            <p>500-bed Teaching Hospital Digital Transformation Initiative</p>
+        </div>
+        
+        <div class="team-names">
+            <strong>Project Team:</strong> Rachel • Olajumoke • Kennedy • Ananya
+        </div>
+        
+        <div class="vision">
+            <h2>Vision:</h2>
+            <p>To modernize laboratory operations through comprehensive LIS implementation, integrating test ordering, specimen tracking, result reporting, and workflow automation to reduce errors, decrease turnaround times, support hospital accreditation requirements, and ultimately enhance patient care delivery in our teaching hospital environment.</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Main Logic Flow -->
+            <div class="logic-flow">
+                <!-- INPUTS -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Inputs</h3>
+                        <span class="subtitle">Resources Available</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="flow-item">
+                            <strong>Financial Resources</strong>
+                            <ul>
+                                <li>Software and hardware procurement costs</li>
+                                <li>Training and implementation expenses</li>
+                                <li>Ongoing maintenance and support costs</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>IT Infrastructure</strong>
+                            <ul>
+                                <li>Servers, networks, and workstations</li>
+                                <li>EMR integration capabilities</li>
+                                <li>Data storage and backup systems</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Human Resources</strong>
+                            <ul>
+                                <li>IT staff and laboratory personnel</li>
+                                <li>Trainers and hospital administrators</li>
+                                <li>Dedicated project manager</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Organizational Support</strong>
+                            <ul>
+                                <li>Leadership commitment and stakeholder buy-in</li>
+                                <li>Established policies and procedures</li>
+                                <li>Cross-departmental partnerships</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ACTIVITIES -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Activities</h3>
+                        <span class="subtitle">What We Do</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="flow-item">
+                            <strong>LIS Configuration & Integration</strong>
+                            <ul>
+                                <li>System installation and setup</li>
+                                <li>Integration with hospital EMR systems</li>
+                                <li>Interface development and testing</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Training & Assessment</strong>
+                            <ul>
+                                <li>Comprehensive staff training programs</li>
+                                <li>Competency assessment protocols</li>
+                                <li>User documentation and support materials</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Process Optimization</strong>
+                            <ul>
+                                <li>Implementation planning and workflow optimization</li>
+                                <li>Process mapping and standardization</li>
+                                <li>Change management activities</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Quality Assurance</strong>
+                            <ul>
+                                <li>System performance monitoring</li>
+                                <li>Data migration and validation</li>
+                                <li>Quality assurance setup and testing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OUTPUTS -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Outputs</h3>
+                        <span class="subtitle">Direct Products</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="flow-item">
+                            <strong>Fully Operational LIS</strong>
+                            <ul>
+                                <li>Complete system with EMR integration capabilities</li>
+                                <li>Automated laboratory workflows operational</li>
+                                <li>Real-time data processing and reporting</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Trained Workforce</strong>
+                            <ul>
+                                <li>Staff proficient in new system operations</li>
+                                <li>Competency validated across all user levels</li>
+                                <li>Training documentation and protocols established</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Standardized Workflows</strong>
+                            <ul>
+                                <li>Automated processes for test ordering</li>
+                                <li>Streamlined specimen tracking and reporting</li>
+                                <li>Integrated quality control measures</li>
+                            </ul>
+                        </div>
+                        <div class="flow-item">
+                            <strong>Performance Metrics</strong>
+                            <ul>
+                                <li>Readily available audit trails</li>
+                                <li>Baseline performance metrics established</li>
+                                <li>Real-time monitoring capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SHORT-TERM OUTCOMES -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Short-term</h3>
+                        <span class="subtitle">3-6 months</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="outcome-item">
+                            28% reduction in transcription errors
+                            <div class="citation">(Antonio et al., 2024)</div>
+                        </div>
+                        <div class="outcome-item">
+                            Enhanced specimen tracking capabilities
+                            <div class="citation">(Ligolab, 2025)</div>
+                        </div>
+                        <div class="outcome-item">
+                            Improved workflow efficiency and staff productivity
+                        </div>
+                        <div class="outcome-item">
+                            Reduced manual data entry requirements
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MEDIUM-TERM OUTCOMES -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Medium-term</h3>
+                        <span class="subtitle">6-18 months</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="outcome-item">
+                            35% reduction in test turnaround times
+                            <div class="citation">(Antonio et al., 2024)</div>
+                        </div>
+                        <div class="outcome-item">
+                            85-90% clinician satisfaction rate
+                            <div class="citation">(Antonio et al., 2024)</div>
+                        </div>
+                        <div class="outcome-item">
+                            Enhanced data quality and reporting capabilities
+                        </div>
+                        <div class="outcome-item">
+                            Improved regulatory compliance and audit readiness
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- LONG-TERM OUTCOMES -->
+                <div class="flow-section">
+                    <div class="flow-header">
+                        <h3>Long-term</h3>
+                        <span class="subtitle">18+ months</span>
+                    </div>
+                    <div class="flow-content">
+                        <div class="outcome-item">
+                            Improved patient outcomes through timely diagnosis and treatment
+                            <div class="citation">(St John, A., 2020)</div>
+                        </div>
+                        <div class="outcome-item">
+                            Strengthened hospital accreditation readiness and compliance
+                            <div class="citation">(Ligolab, 2025)</div>
+                        </div>
+                        <div class="outcome-item">
+                            Enhanced clinical decision-making through better data access
+                        </div>
+                        <div class="outcome-item">
+                            Reduced healthcare costs and resource optimization
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Impact and Assumptions -->
+            <div class="impact-assumptions-row">
+                <div class="impact-section">
+                    <div class="section-header">
+                        <h3>Impact - Long-term Effects</h3>
+                    </div>
+                    <div class="section-content">
+                        <div class="impact-grid">
+                            <div class="impact-item">
+                                <strong>Institutional Excellence</strong>
+                                Enhanced quality and accreditation through data-driven decision making
+                            </div>
+                            <div class="impact-item">
+                                <strong>Community Health</strong>
+                                Improved population health outcomes in served community
+                            </div>
+                            <div class="impact-item">
+                                <strong>Economic Efficiency</strong>
+                                Reduced healthcare costs and improved resource utilization
+                            </div>
+                            <div class="impact-item">
+                                <strong>Digital Leadership</strong>
+                                Contribution to health system digital transformation
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="assumptions-section">
+                    <div class="section-header">
+                        <h3>Key Assumptions</h3>
+                    </div>
+                    <div class="section-content">
+                        <div class="assumptions-grid">
+                            <div class="assumption-item">
+                                <h4>Technical Infrastructure</h4>
+                                <p>Existing IT infrastructure has sufficient capacity for LIS integration and real-time data processing</p>
+                            </div>
+                            <div class="assumption-item">
+                                <h4>Organizational Readiness</h4>
+                                <p>Leadership maintains support and staff demonstrate readiness for technology adoption</p>
+                            </div>
+                            <div class="assumption-item">
+                                <h4>Operational Continuity</h4>
+                                <p>Patient care remains uninterrupted and quality standards maintained during transition</p>
+                            </div>
+                            <div class="assumption-item">
+                                <h4>Vendor Support</h4>
+                                <p>LIS vendor provides adequate technical support with stable regulatory requirements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function downloadImage() {
+            const button = document.querySelector('.download-btn');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '⏳ Generating...';
+            button.disabled = true;
+            
+            try {
+                const element = document.getElementById('logic-model-container');
+                
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: 1900,
+                    height: 1000
+                });
+                
+                canvas.toBlob(function(blob) {
+                    const link = document.createElement('a');
+                    link.download = 'LIS_Logic_Model_Enhanced_' + new Date().toISOString().split('T')[0] + '.png';
+                    link.href = URL.createObjectURL(blob);
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    URL.revokeObjectURL(link.href);
+                }, 'image/png', 1.0);
+                
+                button.innerHTML = '✅ Downloaded!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Error generating image:', error);
+                button.innerHTML = '❌ Error';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
